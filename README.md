@@ -15,7 +15,7 @@ once they've appeared more times than the limit set by the user.
 
 This extension requires minimal permissions to protect your privacy and ensure lightweight operation:
 
-- Access to www.youtube.com is needed to scan and modify the page elements
+- Access to www.youtube.com data is needed to scan and modify the page elements
 - Access for storing data in local browser storage is needed to remember tracked videos across sessions.
 
 All data is only kept in local browser storage, never sent to anywhere else or collected, clearing browser cache will result with loss of data.
