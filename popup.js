@@ -14,8 +14,8 @@ const toggleBtn = $("toggle");
 const clearBtn = $("clear");
 const statusEl = $("status");
 
-const reloadNote = $("reloadNote");
-const markChanged = () => { reloadNote.hidden = false; };
+const RELOAD_MSG = "Saved. Reloading the page is recommended.";
+let needsReload = false;
 
 let tabId = null;
 let tabState = null; // null = not a YouTube tab / content script unavailable
@@ -31,8 +31,17 @@ function show(msg, cls) {
   statusEl.textContent = msg;
   statusEl.className = cls || "";
   if (msg && cls === "ok") {
-    statusTimer = setTimeout(() => show(""), 2500);
+    statusTimer = setTimeout(() => {
+      // Fall back to the reload reminder instead of going blank.
+      if (needsReload) show(RELOAD_MSG, "ok sticky");
+      else show("");
+    }, 2500);
   }
+}
+
+function markChanged() {
+  needsReload = true;
+  show(RELOAD_MSG, "ok sticky");
 }
 
 function setSwitch(btn, on) {
@@ -89,7 +98,6 @@ async function save() {
   }
   await browser.storage.local.set({ value: parseInt(raw, 10) });
   markChanged();
-  show("Saved.", "ok");
 }
 
 saveBtn.addEventListener("click", save);
@@ -120,7 +128,6 @@ async function saveExpire() {
   if (isPositiveInt(raw)) update.expireDays = parseInt(raw, 10);
   await browser.storage.local.set(update);
   markChanged();
-  show("Saved.", "ok");
 }
 
 saveExpireBtn.addEventListener("click", saveExpire);
