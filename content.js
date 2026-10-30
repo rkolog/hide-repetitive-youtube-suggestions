@@ -230,6 +230,22 @@
     });
   }
 
+  // Re-apply the current limit to cards that were already processed.
+  // n > limit  -> hide
+  // n < limit  -> show
+  // n == limit -> leave as is (it was shown on the view that reached the limit)
+  function reevaluate() {
+    if (!ready) return;
+    document.querySelectorAll("[data-vh-id]").forEach((card) => {
+      const entry = counts[card.dataset.vhId];
+      const n = entry ? entry.n : 0;
+      if (n > limit) hide(card);
+      else if (n < limit) unhide(card);
+    });
+    sendBadge();
+    scheduleScan();
+  }
+
   async function init() {
     const stored = await browser.storage.local.get([
       "value", "counts", "enabled", "expireEnabled", "expireDays",
@@ -282,6 +298,7 @@
     if (changes.value) {
       const v = changes.value.newValue;
       limit = Number.isInteger(v) && v > 0 ? v : DEFAULT_LIMIT;
+      reevaluate();
     }
 
     if (changes.counts) {
