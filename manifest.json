@@ -33,7 +33,7 @@
   ],
   "browser_specific_settings": {
     "gecko": {
-      "id": "hide-rpt-yt-suggestions@rkolog.com",
+      "id": "hide-rpt-yt-suggestions@rkolog",
       "strict_min_version": "140.0",
       "data_collection_permissions": { "required": ["none"] }
     }
