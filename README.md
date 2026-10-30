@@ -29,4 +29,4 @@ Contributions are welcomed. My personally planned features for future:
 
 ## License
 
-This project is open-source software. Feel free to modify and distribute as needed. Intended to work with YouTube, not affiliated or officially connected to YouTube, Google LLC or Alphabet Inc.
+This project is open-source software. Feel free to modify and distribute as needed. Intended to work with YouTube desktop webpage, not affiliated or officially connected to YouTube, Google LLC or Alphabet Inc.
