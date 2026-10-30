@@ -31,17 +31,12 @@ function show(msg, cls) {
   statusEl.textContent = msg;
   statusEl.className = cls || "";
   if (msg && cls === "ok") {
-    statusTimer = setTimeout(() => {
-      // Fall back to the reload reminder instead of going blank.
-      if (needsReload) show(RELOAD_MSG, "ok sticky");
-      else show("");
-    }, 2500);
+    statusTimer = setTimeout(() => show(""), 2500);
   }
 }
 
 function markChanged() {
-  needsReload = true;
-  show(RELOAD_MSG, "ok sticky");
+  show("Saved.", "ok");
 }
 
 function setSwitch(btn, on) {
@@ -62,7 +57,6 @@ enableBtn.addEventListener("click", async () => {
   renderEnable();
   await browser.storage.local.set({ enabled });
   markChanged();
-  setTimeout(refreshTabState, 350);
 });
 
 // ---------- stored-videos text ----------
@@ -83,9 +77,25 @@ async function refreshStored() {
   renderStored(value, counts);
 }
 
+let refreshTimer = null;
 browser.storage.onChanged.addListener((changes, area) => {
   if (area !== "local") return;
-  if (changes.counts || changes.value) refreshStored();
+  if (changes.counts) {
+    const nv = changes.counts.newValue;
+    if (!nv || Object.keys(nv).length === 0) {
+      /* existing clear logic */
+    } else if (document.hidden) {
+      // Only adopt remote changes in background tabs to avoid fighting our own writes.
+      counts = normalizeCounts(nv).counts;
+      reevaluate();
+    }
+  }
+  if (changes.value || changes.enabled || changes.expireEnabled ||
+      changes.expireDays || changes.counts) {
+    // Give the content script a moment to re-apply before asking its state.
+    clearTimeout(refreshTimer);
+    refreshTimer = setTimeout(refreshTabState, 300);
+  }
 });
 
 // ---------- hide threshold ----------
