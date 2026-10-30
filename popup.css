@@ -212,18 +212,6 @@ input[type="number"]:disabled { opacity: 0.5; }
 #status.ok { color: var(--ok); }
 #status.error { color: var(--error); }
 
-.note {
-  margin: 6px 0 0;
-  padding: 8px 10px;
-  border-left: 3px solid var(--accent);
-  border-radius: 6px;
-  background: var(--surface);
-  color: var(--muted);
-  font-size: 12px;
-}
-
-.note[hidden] { display: none; }
-
 footer {
   margin-top: 6px;
   padding-top: 8px;
