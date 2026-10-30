@@ -1,0 +1,246 @@
+:root {
+  color-scheme: light dark;
+  --bg: #ffffff;
+  --surface: #f3f4f7;
+  --surface-hover: #e9ebf0;
+  --text: #1c1e23;
+  --muted: #646a75;
+  --line: #e1e3e9;
+  --track: #b8bcc6;
+  --accent: #3a56d4;
+  --accent-text: #ffffff;
+  --danger: #c4302b;
+  --danger-text: #ffffff;
+  --ok: #217a38;
+  --error: #c4302b;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #1b1c20;
+    --surface: #26282e;
+    --surface-hover: #30333a;
+    --text: #eceef2;
+    --muted: #9aa0ab;
+    --line: #34363d;
+    --track: #4a4d56;
+    --accent: #8ea2ff;
+    --accent-text: #10162e;
+    --danger: #ff7d78;
+    --danger-text: #2a0d0c;
+    --ok: #74d18b;
+    --error: #ff8d88;
+  }
+}
+
+* { box-sizing: border-box; }
+
+body {
+  width: 280px;
+  margin: 0;
+  padding: 14px 14px 10px;
+  background: var(--bg);
+  color: var(--text);
+  font: 13px/1.4 system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+/* ---------- header ---------- */
+
+.head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+h1 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 650;
+  letter-spacing: -0.01em;
+}
+
+.summary {
+  margin: 12px 0 14px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--muted);
+}
+
+/* ---------- switch ---------- */
+
+.switch {
+  position: relative;
+  flex: none;
+  width: 40px;
+  height: 24px;
+  padding: 0;
+  border: 0;
+  border-radius: 12px;
+  background: var(--track);
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.switch[aria-checked="true"] { background: var(--accent); }
+
+.switch .thumb {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+  transition: transform 0.15s;
+}
+
+.switch[aria-checked="true"] .thumb { transform: translateX(16px); }
+
+/* ---------- form ---------- */
+
+fieldset {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  transition: opacity 0.15s;
+}
+
+fieldset:disabled { opacity: 0.45; }
+
+section + section {
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+}
+
+label, .label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 600;
+}
+
+.line {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.line .label { margin: 0; }
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.unit { color: var(--muted); }
+
+input[type="number"] {
+  flex: 1;
+  min-width: 0;
+  padding: 6px 8px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--surface);
+  color: inherit;
+  font: inherit;
+}
+
+input[type="number"]:disabled { opacity: 0.5; }
+
+/* ---------- buttons ---------- */
+
+.btn {
+  padding: 6px 12px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--surface);
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+.btn:hover:not(:disabled) { background: var(--surface-hover); }
+.btn:disabled { cursor: default; opacity: 0.55; }
+
+.btn.primary {
+  border-color: transparent;
+  background: var(--accent);
+  color: var(--accent-text);
+  font-weight: 600;
+}
+
+.btn.primary:hover:not(:disabled) {
+  background: var(--accent);
+  filter: brightness(1.08);
+}
+
+.btn.danger {
+  border-color: transparent;
+  background: var(--danger);
+  color: var(--danger-text);
+  font-weight: 600;
+}
+
+.btn.danger:hover:not(:disabled) {
+  background: var(--danger);
+  filter: brightness(1.08);
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.actions .btn { width: 100%; }
+
+/* ---------- status + footer ---------- */
+
+#status {
+  min-height: 1.4em;
+  margin: 10px 0 0;
+  font-size: 12px;
+}
+
+#status.ok { color: var(--ok); }
+#status.error { color: var(--error); }
+
+.note {
+  margin: 6px 0 0;
+  padding: 8px 10px;
+  border-left: 3px solid var(--accent);
+  border-radius: 6px;
+  background: var(--surface);
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.note[hidden] { display: none; }
+
+footer {
+  margin-top: 6px;
+  padding-top: 8px;
+  border-top: 1px solid var(--line);
+  font-size: 12px;
+}
+
+footer a { color: var(--muted); text-decoration: none; }
+footer a:hover { color: var(--text); text-decoration: underline; }
+
+/* ---------- focus + motion ---------- */
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+}
