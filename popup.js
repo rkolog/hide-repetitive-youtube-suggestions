@@ -80,16 +80,12 @@ async function refreshStored() {
 let refreshTimer = null;
 browser.storage.onChanged.addListener((changes, area) => {
   if (area !== "local") return;
-  if (changes.counts) {
-    const nv = changes.counts.newValue;
-    if (!nv || Object.keys(nv).length === 0) {
-      /* existing clear logic */
-    } else if (document.hidden) {
-      // Only adopt remote changes in background tabs to avoid fighting our own writes.
-      counts = normalizeCounts(nv).counts;
-      reevaluate();
-    }
+
+  if (changes.value || changes.counts) {
+    // Recompute from storage so the text matches the current limit and counts.
+    refreshStored();
   }
+
   if (changes.value || changes.enabled || changes.expireEnabled ||
       changes.expireDays || changes.counts) {
     // Give the content script a moment to re-apply before asking its state.
@@ -155,7 +151,7 @@ function renderToggle() {
   }
   toggleBtn.disabled = false;
   toggleBtn.textContent =
-    (tabState.showHidden ? "Hide again" : "Show hidden") + ` (${tabState.hidden})`;
+    (tabState.showHidden ? "Hide again" : "Show currently hidden") + ` (${tabState.hidden})`;
   toggleBtn.dataset.on = tabState.showHidden ? "1" : "";
 }
 
