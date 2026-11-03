@@ -24,8 +24,7 @@ All data is only kept in local browser storage, never sent to anywhere else or c
 
 Contributions are welcomed. My personally planned features for future:
 
-- Option to export and import data of tracked videos
-- Option to flag videos as "NeverHide", they won't become hidden even if they breach the appearance threshold (planned as a button on video cards)
+- Support to flag videos as "NeverHide", they won't become hidden even if they breach the appearance threshold (planned as a button on video cards)
 
 ## License
 
